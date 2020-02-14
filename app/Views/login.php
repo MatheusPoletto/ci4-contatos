@@ -59,7 +59,9 @@
             </div>
         </div>
 
-        <script src="<?=base_url();?>/js/home/login.js" type="text/javascript"></script>
+        <script type="text/javascript"> var redirecionarPara = "<?php echo URL."/contatos"; ?>"; </script>
+        <script src="<?=base_url();?>/js/home/login.js" type="text/javascript">            
+        </script>
           
 </body>
 

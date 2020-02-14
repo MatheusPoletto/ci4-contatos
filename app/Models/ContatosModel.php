@@ -5,16 +5,20 @@ use CodeIgniter\Model;
 class ContatosModel extends Model
 {
         protected $table = 'TBL_CONTATO';
+        protected $returnType = '\App\Entities\Contato';
 
-        public function getContatos($nome = false)
+        public function getColunas()
         {
-                if ($nome === false)
-                {
-                        return $this->findAll();
-                }
-        
-                return $this->asArray()
-                             ->where(['DS_NOME' => $nome])
-                             ->first();
+                $db = \Config\Database::connect();
+
+                return $db->simpleQuery("SELECT `COLUMN_NAME` 
+                FROM `INFORMATION_SCHEMA`.`COLUMNS` 
+                WHERE `TABLE_SCHEMA`='db_contatos' 
+                    AND `TABLE_NAME`='tbl_contato';")->fetch_all();               
+        }
+
+        public function getContatos()
+        {
+                return $this->findAll();               
         }
 }

@@ -30,6 +30,14 @@ $(document).ready(function() {
         if(jResponse.errors.senha !== undefined){
           $validacao.html($validacao.html() + "<br>" + jResponse.errors.senha);
         }
+        if(jResponse.confere !== undefined){
+          if(jResponse.confere){
+            window.location.href = redirecionarPara;
+            return;
+          }
+
+          $validacao.html($validacao.html() + "<br>" + "Usuário ou senha inválidos!");
+        }
           
         if($validacao.html() != ""){
           $validacao.html($validacao.html().replace('<br>', ''));

@@ -1,14 +1,11 @@
 <?php namespace App\Controllers;
+use App\Models\UsuariosModel;
 
 class Home extends BaseController
 {
 	public function index()
 	{
-
-	
 			echo view('login', ['title' => 'Blue / Acesso']);
-
-	
 	}
 
 	public function post_login()
@@ -34,11 +31,16 @@ class Home extends BaseController
 		}
 		else { //If not, process the form, and return true on success
 
+				$usuario = new UsuariosModel();
+				$senha_db = $usuario->getUsuarioPeloCodigo($_POST['login']);
+				$confere = false;
+				if($senha_db){
+					$confere = password_verify($_POST['senha'], $senha_db);
+				}
+
 				$form_data['success'] = true;
-				$form_data['posted'] = 'Data Was Posted Successfully';
+				$form_data['confere'] = $confere;
 				$form_data['errors']  = '';
-				$form_data['password'] = password_hash($_POST['senha'], PASSWORD_DEFAULT);
-				$form_data['v'] = password_verify('1234', '$2y$10$tugiQ.rSR/6FoDxmFUODbuP4VDZsFoRXxZqkmNrkcP53W0Bi5gHaG');
 			}
 		
 		//Return the data back to form.php
